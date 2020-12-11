@@ -1,5 +1,13 @@
-var json1 = require('./deviceinfo.json');
-var json2 = require('./wifiList.json');
+var json1 = require('./mock/deviceinfo.json');
+var json2 = require('./mock/wifiList.json');
+var success = require('./mock/success.json');
+var fail = require('./mock/fail.json');
+
+var objeto = {
+    "cmd": "get_status",
+    "channel": 1,
+    "status": "off"
+}
 
 const http = require('http');
 const WebSocketServer = require('websocket').server;
@@ -16,15 +24,17 @@ wsServer.on('request', function(request) {
 
     connection.on('message', function(message) {
     console.log('Received Message:', message.utf8Data);
-    if(message.utf8Data ==  '{"cmd":1}'){
-        connection.sendUTF(JSON.stringify(json1));
-    }else if(message.utf8Data == '{"cmd":2}'){
+    if(message.utf8Data ==  '{"cmd":1,"channel":1}'){
+        connection.sendUTF(JSON.stringify(objeto));
+    }else if(message.utf8Data == '{"cmd":2,"channel":1,"status":"on"}'){
+        objeto.status = 'on';
         connection.sendUTF(JSON.stringify(json2));
-    } else if(message.utf8Data == '{"ssid":"PADOTEC","pswd":"teste"}'){
-        connection.sendUTF(JSON.stringify('success'));
+    } else if(message.utf8Data == '{"cmd":2,"channel":1,"status":"off"}'){
+        objeto.status = 'off';
+        connection.sendUTF(JSON.stringify(json2));
     }
     else{
-        connection.sendUTF(JSON.stringify('fail'));
+        connection.sendUTF(JSON.stringify(fail));
     }
       
     });

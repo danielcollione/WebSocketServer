@@ -1,0 +1,5 @@
+{
+    "cmd": "set_status",
+    "channel": 1,
+    "msg": "ok"
+}

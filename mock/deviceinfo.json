@@ -1,0 +1,5 @@
+{
+    "cmd": "get_status",
+    "channel": 1,
+    "status": "off"
+}
