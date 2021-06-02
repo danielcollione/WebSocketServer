@@ -1,3 +1,6 @@
 node_modules/
 .DS_Store
-cert
+
+
+cert/cert.perm
+cert/key.perm
